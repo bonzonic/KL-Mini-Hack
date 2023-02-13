@@ -1,8 +1,11 @@
 {
-  "name": "contracts",
+  "name": "truffle-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "hardhat": "^2.12.7"
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1"
   }
 }
