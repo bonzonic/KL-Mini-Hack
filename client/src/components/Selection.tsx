@@ -3,6 +3,7 @@ interface SelectionProps {
     question: string,
     candidates: string[]
     key?: any
+    checkedCandidate?: string,
     handleSelection: (id: number, selection: string) => void
 }
 
@@ -21,9 +22,19 @@ const Selection = (props: SelectionProps) => {
             {
                 props.candidates.map((candidate: string, key: number) => {
                     return (
-                        <div key={key} className={`bg-gray-200 rounded-xl p-2 my-3`} onClick={(e) => handleClick(e)}>
-                            <input type="radio" id={candidate} name={props.question} value={candidate} onClick={() => props.handleSelection(props.id, candidate)} className="mr-2"/>
-                            <label htmlFor={candidate} onClick={(e) => {e.stopPropagation()}}>{candidate}</label>
+                        <div key={key} className="relative" onClick={(e) => handleClick(e)}>
+                            <input type="radio" 
+                                id={candidate} 
+                                name={props.question} 
+                                value={candidate} 
+                                defaultChecked={candidate === props.checkedCandidate}
+                                onClick={() => props.handleSelection(props.id, candidate)} 
+                                className="ml-2 absolute top-1/2 -translate-y-1/2 w-4 h-4"/>
+                            <label className="border-2 flex bg-gray-200 rounded-xl p-2 pl-7 my-3 box-border" htmlFor={candidate} onClick={(e) => {e.stopPropagation()}}>
+                                <div>
+                                    {candidate}
+                                </div>
+                            </label>
                         </div>
                     )
                 })
