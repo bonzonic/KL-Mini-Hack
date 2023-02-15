@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import FormLogIn from "../components/FormLogIn"
+import Login from "../layouts/Login"
 import { UserAuthenticationContext } from "../contexts/UserAuthenticationContext"
 
 const LogIn = () => {
@@ -16,7 +16,10 @@ const LogIn = () => {
         return <div className=""><p>You're logged in as {state.id}</p></div>
     }
     
-    return <FormLogIn />
+    return (
+        <>
+           <Login />
+        </>)
 }
 
 export default LogIn
