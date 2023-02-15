@@ -1,4 +1,4 @@
-export default function FormSignUpConfirm(props: any) {
+const FormSignUpConfirm = (props: any) => {
   return (
     <div className="confirm">
         <h2>Confirm The Details</h2>
@@ -8,3 +8,5 @@ export default function FormSignUpConfirm(props: any) {
     </div>
   )
 }
+
+export default FormSignUpConfirm
