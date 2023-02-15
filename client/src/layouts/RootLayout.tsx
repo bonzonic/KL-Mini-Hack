@@ -1,10 +1,9 @@
 import { Outlet, NavLink } from 'react-router-dom'
-import logo from '../assets/react.svg'
 
 const RootLayout = () => {
     return (
         <div>
-            <header className='bg-teal-700 shadow-md px-3 py-6 text-lg'>
+            <header className='bg-teal-700 shadow-md px-3 py-6 text-lg sticky'>
                 <nav className="flex justify-between">
                     <div className="flex flex-row items-center">
                         <NavLink className="text-white" to="/">
