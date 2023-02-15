@@ -30,6 +30,15 @@ function FormRegister({ onAlreadyHaveAccountClick }: Props): JSX.Element {
     const formData = new FormData(event.currentTarget);
     // formData.append('email', email)
     // formData.append('password', password)
+    if (formData.get("email")!.toString().length < 1) {
+        Sweetalert2.fire({
+            icon: 'error',
+            iconColor: 'teal',
+            title: 'Oops...',
+            text: 'Empty email',
+          })
+        return null
+    }
 
     if (formData.get("password") !== formData.get("confirmPassword")) {
         Sweetalert2.fire({
@@ -47,14 +56,22 @@ function FormRegister({ onAlreadyHaveAccountClick }: Props): JSX.Element {
         body: formData,
     });
 
-    // // handle the response from the server
-    // if (response.ok) {
-    //     // the request was successful
-    //     console.log('Registration successful!');
-    // } else {
-    //     // there was an error
-    //     console.error('Registration failed.');
-    // }
+    // handle the response from the server
+    if (response.ok) {
+        Sweetalert2.fire({
+            icon: 'success',
+            iconColor: 'teal',
+            title: 'To login...',
+            text: 'Registration is successful!',
+          }).then (()=> {
+            // the request was successful
+            console.log('Registration successful!');
+            handleSignInClick()
+          })
+    } else {
+        // there was an error
+        console.error('Registration failed.');
+    }
 
   };
 
