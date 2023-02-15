@@ -1,4 +1,4 @@
-export default function FormSignUpUserDetails(props: any) {
+const FormSignUpUserDetails = (props: any) => {
   return (
     <div className="user-details">
         <h2>Sign Up User Details</h2>
@@ -10,3 +10,5 @@ export default function FormSignUpUserDetails(props: any) {
     </div>
   )
 }
+
+export default FormSignUpUserDetails
