@@ -1,13 +1,13 @@
-import { NavLink } from "react-router-dom"
 import './FormLogin.css'
 import FormInput from './FormInput'
 import { useEffect } from 'react';
 import ScrollReveal from 'scrollreveal';
 
+interface Props {
+  onCreateAccountClick?: () => void;
+}
 
-export default function FormLogIn() {
-  const formdata = [['Username', 'username'], ['Password', 'password']]
-
+export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element {
 
   useEffect(() => {
     const sr = ScrollReveal();
@@ -23,6 +23,13 @@ export default function FormLogIn() {
 
   }, []);
 
+  const handleCreateAccountClick = () => {
+
+    if (onCreateAccountClick) {
+      onCreateAccountClick();
+    }
+  };
+
 return (
   <div className="login-form container">
     <section className="wrapper">
@@ -31,7 +38,7 @@ return (
         <p className="text text-normal">
           New user?{" "}
           <span>
-            <a href="#" className="text text-links">
+            <a href="#" className="text text-links" onClick={handleCreateAccountClick}>
               Create an account
             </a>
           </span>
@@ -74,20 +81,4 @@ return (
     </section>
   </div>
 )
-
-  {/* // return (
-  //   <div classNameName="login-container">
-  //     <form classNameName="login-form">
-  //       <div classNameName="user-name">
-  //         <FormInput label="Username" propclassName="username" placeholder="Enter your name"/>
-  //       </div> 
-  //       <div classNameName="password">
-  //         <FormInput label="Password" propclassName="password" placeholder="Enter your password"/>
-  //       </div>
-  //       <div classNameName="button">
-  //         <input type="submit" value="Register"/>
-  //       </div>
-  //     </form>
-  //   </div>
-  // ) */}
 }
