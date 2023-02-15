@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom"
-
-export default function FormLogIn() {
+const FormLogIn = () => {
   return (
     <div>
       <div>FormLogIn</div>
     </div>
   )
 }
+
+export default FormLogIn
