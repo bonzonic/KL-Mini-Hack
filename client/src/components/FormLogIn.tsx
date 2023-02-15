@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import ScrollReveal from 'scrollreveal';
 
 interface Props {
-  onCreateAccountClick?: () => void;
+  onCreateAccountClick: () => void;
 }
 
 export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element {
@@ -12,7 +12,7 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   useEffect(() => {
     const sr = ScrollReveal();
     sr.reveal('.login-form', {
-      duration: 500,
+      duration: 400,
       distance: '40px',
       easing: 'ease-out',
       origin: 'bottom',
@@ -24,10 +24,7 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   }, []);
 
   const handleCreateAccountClick = () => {
-
-    if (onCreateAccountClick) {
-      onCreateAccountClick();
-    }
+    onCreateAccountClick();
   };
 
 return (
