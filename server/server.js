@@ -8,6 +8,7 @@ app.use(cors({origin: ["http://127.0.0.1:5173", "http://127.0.0.1:5174"]}));
 
 // Stores as key(email): [value(password), []]
 const user_database = {}
+const election_database = {}
 //const user_database = {"euanlim@gmail.com":["password", []]}
 
 // Parse JSON and x-www-form-urlencoded request bodies
