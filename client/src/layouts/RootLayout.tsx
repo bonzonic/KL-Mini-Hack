@@ -3,6 +3,7 @@ import profileLogo from '../assets/person-fill.svg'
 import './Navbar.css'
 
 const RootLayout = () => {
+    
     return (
         <div>
             <header className='bg-teal-700 shadow-md px-3 py-6 text-lg sticky'>
