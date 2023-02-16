@@ -5,6 +5,8 @@ import wallet from '../assets/wallet2.svg'
 import coin from '../assets/coin.svg'
 import priceTag from '../assets/tag.svg'
 import './Profile.css'
+import { useSelector } from 'react-redux';
+import Sweetalert2 from 'sweetalert2';
 
 const Profile = (props: any) => {
     useEffect(() => {
@@ -40,8 +42,24 @@ const Profile = (props: any) => {
           });
       }, []);
 
+      const loggedIn = useSelector((state: boolean) => (state.authentication! as AuthenticationState).loggedIn);
+
+      if (!loggedIn) {
+        Sweetalert2.fire({
+            icon: 'error',
+            iconColor: 'teal',
+            title: 'To login...',
+            text: 'You are not logged in!',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/login'; // replace '/login' with the actual URL of your login page
+              }
+          })
+      }
+
     return (
         <div className="wrapper-dashboard">
+            {loggedIn && (
             <div className="dashboard grid md:grid-cols-2 md:grid-rows-3 gap-6 m-6">
                 <div className="grid-item row-span-3 profile-info">
                     <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
@@ -90,6 +108,7 @@ const Profile = (props: any) => {
                     </div>
                 </div>
             </div>
+        )}
         </div>
     )
 }

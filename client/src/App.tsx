@@ -7,7 +7,9 @@ import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
 import './App.css'
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "./slice/authenticationSlice";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,8 +20,6 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />}/>
     </Route>)
 )
-
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)

@@ -10,8 +10,6 @@ const LogIn = () => {
 
     const isLoggedIn = useContext(UserAuthenticationContext)
 
-    console.log("isLoggedIn:", isLoggedIn)
-
     if (isLoggedIn) {
         return <div className=""><p>You're logged in as {state.id}</p></div>
     }
