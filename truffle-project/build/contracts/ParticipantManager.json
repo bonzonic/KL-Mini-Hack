@@ -1,0 +1,75 @@
+{
+  "contractName": "ParticipantManager",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ParticipantManager.sol\":\"ParticipantManager\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ParticipantManager.sol\":{\"keccak256\":\"0x6d8e44d81dfbdbc8bd475916a1ac51daa6e4a5689129b432b0a5a4d5a1b84d56\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4123ec959ed239aace3e5f505ef98786d5e1fc4e32a6c6914f1e1f309a286642\",\"dweb:/ipfs/QmTq2HWNnWSLwSJouXFpRm7c6eezBzDFcWcYAaFwoES3oZ\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea264697066735822122040b254decf7266a3dc8f3053a1f26121e578e49d60a9b122fc2c8187a65950b264736f6c63430008120033",
+  "deployedBytecode": "0x6080604052600080fdfea264697066735822122040b254decf7266a3dc8f3053a1f26121e578e49d60a9b122fc2c8187a65950b264736f6c63430008120033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "60:32:1:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "60:32:1:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ncontract ParticipantManager {\r\n}",
+  "sourcePath": "D:\\BlockChain\\KL-Mini-Hack\\truffle-project\\contracts\\ParticipantManager.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ParticipantManager.sol",
+    "exportedSymbols": {
+      "ParticipantManager": [
+        263
+      ]
+    },
+    "id": 264,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 262,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ParticipantManager",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 263,
+        "linearizedBaseContracts": [
+          263
+        ],
+        "name": "ParticipantManager",
+        "nameLocation": "69:18:1",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 264,
+        "src": "60:32:1",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:59:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.18+commit.87f61d96.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-16T13:24:04.458Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
