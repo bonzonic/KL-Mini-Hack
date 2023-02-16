@@ -17,8 +17,8 @@ const Selection = (props: SelectionProps) => {
     }
 
     return (
-        <div className="rounded-lg bg-gray-100 p-3 my-3">
-            <h2>{props.question}</h2>
+        <div className="rounded-xl bg-slate-50 p-3 my-4 shadow">
+            <h2 className="text-black">{props.question}</h2>
             {
                 props.candidates.map((candidate: string, key: number) => {
                     return (

@@ -7,13 +7,10 @@ import Sweetalert2 from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/authenticationSlice";
 import { RootState } from '../main';
+import { AuthenticationState } from '../slice/authenticationSlice';
 
 interface Props {
   onCreateAccountClick: () => void;
-}
-
-interface AuthenticationState {
-  loggedIn: boolean;
 }
 
 export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element {
@@ -23,7 +20,7 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   const loggedIn = useSelector((state: RootState) => (state.authentication as AuthenticationState).loggedIn);
 
   console.log(loggedIn)
-    
+  
   const handleLogin = () => {
     dispatch(login());
   };

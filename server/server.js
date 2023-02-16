@@ -63,6 +63,37 @@ app.post('/user/register', (req, res) => {
     res.status(200).send('Registration successful!');
 })
 
+
+
+app.post('/user/vote', (req, res) => {
+    const email = req.body.email
+    const electionName= req.body.electionName
+    const ballot = req.body.ballot
+
+    if (!user_database.hasOwnProperty(email)) {
+        console.log("The user with the email ", email, " is not registered!")
+        res.status(401).send('Invalid email')
+    }
+    else {
+        if (!user_database[email][1].hasOwnProperty("history")) {
+            user_database[email][1]["history"] = {}
+        }
+
+        user_database[email][1]["history"][electionName] = ballot
+
+        console.log(user_database[email][1]["history"])
+
+        // user_database[email][1]["history"] = [...user_database[email][1]["history"], {
+        //     electionName: electionName,
+        //     ballot: ballot,
+        // }]
+        
+        console.log(JSON.stringify(user_database))
+    }
+
+    res.status(200).send("Vote succesful")
+})
+
 app.listen(8080, () => {
     console.log("Listening on port 8080")
 })
