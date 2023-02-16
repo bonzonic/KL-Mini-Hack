@@ -10,6 +10,7 @@ import Sweetalert2 from 'sweetalert2';
 
 const Profile = (props: any) => {
     const [Username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         const sr = ScrollReveal();
@@ -19,7 +20,7 @@ const Profile = (props: any) => {
           easing: 'ease-out',
           origin: 'bottom',
           reset: true,
-          viewFactor: 1,
+          viewFactor: 0.5,
           delay: 0,
         });
 
@@ -29,7 +30,7 @@ const Profile = (props: any) => {
           easing: 'ease-out',
           origin: 'right',
           reset: true,
-          viewFactor: 1,
+          viewFactor: 0.5,
           delay: 250,
         });
 
@@ -39,7 +40,7 @@ const Profile = (props: any) => {
             easing: 'ease-out',
             origin: 'right',
             reset: true,
-            viewFactor: 1,  
+            viewFactor: 0.5,  
             delay: 350,
           });
       }, []);
@@ -76,6 +77,8 @@ const Profile = (props: any) => {
         // console.log(Object(json)["username"])
         // console.log(Object.keys(json));
         setUsername(Object(json)["username"])
+        setEmail(localStorage.getItem("email")!)
+
     });
 
     return (
@@ -85,32 +88,32 @@ const Profile = (props: any) => {
                 <div className="grid-item row-span-3 profile-info">
                     <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
                     <h1 className="text-5xl text-center mt-3">{Username}</h1>
-                    <table className="profile-table mt-4">
+                    <table className="profile-table mt-10">
                         <tr>
                             <td>Phone</td>
-                            <td>{"+60 123 456 789"}</td>
+                            <td className="text-right">{"+60 123 456 789"}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>{"johndoe@gmail.com"}</td>
+                            <td className="text-right">{email}</td>
                         </tr>
                         <tr>
                             <td>Date of Birth</td>
-                            <td>{"2003/1/1"}</td>
+                            <td className="text-right">{"2003/1/1"}</td>
                         </tr>
                         <tr>
                             <td>IC Number</td>
-                            <td>{"030101-15-1234"}</td>
+                            <td className="text-right">{"030101-15-1234"}</td>
                         </tr>
                     </table>
                 </div>
 
                 <div className="grid-item crypto-wallet flex justify-center items-center row-span-1 flex-col">
                     <div className='flex flex-row justify-center items-end'>
-                        <h2 className="text-6xl text-center">
-                            {new Intl.NumberFormat('en-us').format(152693)}
+                        <h2 className="text-6xl text-right">
+                            {new Intl.NumberFormat('en-us').format(0)}
                         </h2>
-                        <p>CBC</p>
+                        <p className="text-right">CBC</p>
                     </div>
                     
                     {/* <ul className="flex flex-row justify-evenly w-full mt-8 cbc-actions">
