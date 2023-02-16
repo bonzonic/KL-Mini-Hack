@@ -5,7 +5,7 @@ import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/SignUp'
-import reactLogo from './assets/react.svg'
+import Profile from './pages/Profile'
 import './App.css'
 
 
@@ -15,6 +15,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />}/>
       <Route path="login" element={<LogIn />}/>
       <Route path="sign-up" element={<SignUp />}/>
+      <Route path="profile" element={<Profile />}/>
     </Route>)
 )
 
