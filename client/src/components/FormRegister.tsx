@@ -7,9 +7,11 @@ type Props = {
 };
 
 function FormRegister({ onAlreadyHaveAccountClick }: Props): JSX.Element {
+  const [Username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
 
   useEffect(() => {
     const sr = ScrollReveal();
@@ -96,6 +98,20 @@ function FormRegister({ onAlreadyHaveAccountClick }: Props): JSX.Element {
           </p>
         </div>
         <form name="register" className="form" onSubmit={handleSubmit}>
+        <div className="input-control input-field">
+            <label htmlFor="email" className="input-label" hidden>
+              Username
+            </label>
+            <input
+              type="Username"
+              name="Username"
+              id="Username"
+              className="input-field"
+              placeholder="Username"
+              value={Username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
           <div className="input-control input-field">
             <label htmlFor="email" className="input-label" hidden>
               Email Address

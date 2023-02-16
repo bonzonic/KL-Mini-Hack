@@ -27,26 +27,6 @@ const Login = () => {
     }
   };
 
-  const loggedIn = useSelector((state: boolean) => (state.authentication! as AuthenticationState).loggedIn);
-  const dispatch = useDispatch();
-
-  if (loggedIn) {
-    Sweetalert2.fire({
-        icon: 'info',
-        iconColor: 'teal',
-        title: 'Logout?',
-        text: 'You are already logged in',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'logout'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            dispatch(logout())
-          }
-      })
-    }
-
   return (
     <div>
       {showRegisterForm ? (

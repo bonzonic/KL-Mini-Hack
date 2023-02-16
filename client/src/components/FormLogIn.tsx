@@ -81,6 +81,23 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
       handleLogin()
       console.log(localStorage)
       console.log(loggedIn)
+
+      Sweetalert2.fire({
+        icon: 'success',
+        iconColor: 'teal',
+        title: 'Successful',
+      })
+      return;
+    }
+
+    else {
+      Sweetalert2.fire({
+        icon: 'error',
+        iconColor: 'teal',
+        title: 'Oops...',
+        text: 'Invalid email or Password',
+      })
+      return;
     }
 
     localStorage.clear
