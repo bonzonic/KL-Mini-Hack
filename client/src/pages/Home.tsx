@@ -13,7 +13,15 @@ export interface QuestionAndCandidates {
     candidates: string[]
 }
 
-const election = "Presidential Election"
+export interface Election {
+    name: string,
+    instructin?: string,
+    date_begin?: Date,
+    date_end?: Date,
+    questionsAndCandidates: QuestionAndCandidates[]
+}
+
+const election = "Presidential Election 2023"
 const instruction = "Please view the questions and choices and make your selections."
 
 const questionsAndCandidates = [
