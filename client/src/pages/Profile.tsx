@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ScrollReveal from 'scrollreveal';
 import profilePic from '../assets/person-fill.svg'
 import wallet from '../assets/wallet2.svg'
@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import Sweetalert2 from 'sweetalert2';
 
 const Profile = (props: any) => {
+    const [Username, setUsername] = useState('');
+
     useEffect(() => {
         const sr = ScrollReveal();
         sr.reveal('.profile-info', {
@@ -37,7 +39,7 @@ const Profile = (props: any) => {
             easing: 'ease-out',
             origin: 'right',
             reset: true,
-            viewFactor: 1,
+            viewFactor: 1,  
             delay: 350,
           });
       }, []);
@@ -57,13 +59,32 @@ const Profile = (props: any) => {
           })
       }
 
+    //send the form data to the server using fetch
+    const response = fetch('http://localhost:8080/user', {
+        method: 'POST',
+        body: JSON.stringify({ email: localStorage.getItem("email") }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).then(response => {
+        let resJson = response.json();
+        return resJson;
+    }).then(json => {
+        sessionStorage.setItem("userdata", Object(json)["username"])
+        // console.log("FIRST")
+        // console.log(json)
+        // console.log(Object(json)["username"])
+        // console.log(Object.keys(json));
+        setUsername(Object(json)["username"])
+    });
+
     return (
         <div className="wrapper-dashboard">
             {loggedIn && (
             <div className="dashboard grid md:grid-cols-2 md:grid-rows-3 gap-6 m-6">
                 <div className="grid-item row-span-3 profile-info">
                     <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
-                    <h1 className="text-5xl text-center mt-3">{"John Doe"}</h1>
+                    <h1 className="text-5xl text-center mt-3">{Username}</h1>
                     <table className="profile-table mt-4">
                         <tr>
                             <td>Phone</td>
