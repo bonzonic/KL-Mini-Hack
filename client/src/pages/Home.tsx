@@ -15,14 +15,11 @@ export interface QuestionAndCandidates {
 
 export interface Election {
     name: string,
-    instructin?: string,
+    instruction?: string,
     date_begin?: Date,
     date_end?: Date,
     questionsAndCandidates: QuestionAndCandidates[]
 }
-
-const election = "Presidential Election 2023"
-const instruction = "Please view the questions and choices and make your selections."
 
 const questionsAndCandidates = [
     {
@@ -41,6 +38,13 @@ const questionsAndCandidates = [
         candidates: ["Peter", "Michael Jackson"]
     }
 ]
+
+const election: Election = {
+    name: "Presidential Election 2023",
+    instruction: "Please view the questions and choices and make your selections.",
+    questionsAndCandidates: questionsAndCandidates,
+}
+
 
 const VOTE_STEP = 1
 const CONFIRM_VOTE_STEP = 2
@@ -94,7 +98,7 @@ const Home = () => {
         case CONFIRM_VOTE_STEP:
             return (
                 <div className="container mx-auto">
-                    <BallotConfirm ballot={ballot} questionsAndCandidates={questionsAndCandidates} prevStep={prevStep} handleSubmit={handleSubmit}/>
+                    <BallotConfirm ballot={ballot} election={election} prevStep={prevStep} handleSubmit={handleSubmit}/>
                 </div>
             )
         
@@ -108,9 +112,8 @@ const Home = () => {
         default: // `VOTE_STEP` is the default step
             return (
                 <div className="container mx-auto">
-                    <Ballot electionName={election} 
-                        instruction={instruction} 
-                        questionsAndCandidates={questionsAndCandidates} 
+                    <Ballot
+                        election={election}
                         ballot={ballot}
                         handleSelection={handleSelection}
                         nextStep={nextStep}
