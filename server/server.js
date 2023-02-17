@@ -6,7 +6,6 @@ const Web3 = require("web3");
 const contract = require("@truffle/contract");
 const provider = new Web3.providers.HttpProvider("http://127.0.0.1:9545");
 
-app.use(cors({ origin: ["http://127.0.0.1:5173", "http://127.0.0.1:5174"] }));
 const { json } = require("express");
 const { generateCommitment } = require("zk-merkle-tree");
 
@@ -82,7 +81,7 @@ const getCabbageContractAddr = async () => {
   return instance;
 };
 
-app.post("/api/vote/send-coin", async (req, res) => {
+app.post("/user/send-coin", async (req, res) => {
   const walletAddress = req.body.walletAddress;
   const cabbageCoin = await getCabbageContractAddr();
   await cabbageCoin.mint(walletAddress, 1, {
@@ -91,7 +90,7 @@ app.post("/api/vote/send-coin", async (req, res) => {
 
   const coinAccount = await cabbageCoin.getBalance(walletAddress);
   console.log(coinAccount.words[0]);
-  res.status(204);
+  res.status(200).send({ coins: coinAccount.words[0] });
 });
 
 app.get("/user/get-coin", async (req, res) => {
@@ -156,7 +155,7 @@ app.post("/user/wallet", (req, res) => {
 });
 
 app.get("/user/wallet", (req, res) => {
-  const email = req.body.email;
+  const email = req.query.email;
   if (!user_database.hasOwnProperty(email)) {
     console.log("The user with the email ", email, " is not registered!");
     res.status(401).send("Invalid email");
