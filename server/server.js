@@ -23,9 +23,8 @@ app.use(
 // web3 instance and helpers ===================================================
 const web3 = new Web3("http://127.0.0.1:9545/");
 const ethAcc = {
-  address: "0x696459092307889bd30db6356f315e8c5ada32f0",
-  privateKey:
-    "e64dfb513cc4b7c92dc1958096cbd38edeb275aad9cf384b366711b35a3d1fd6",
+  address: "0xc98ed464e704a2860d9faeff6d3eb32dbc911e1f",
+  privateKey: "b38fb53a58dddbb669b8b1d7f78692769f6d61dcdb3e029b23fe502b3ec1809e"
 };
 
 const getContractAddr = () => {
