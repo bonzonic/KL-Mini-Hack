@@ -7,13 +7,12 @@ import Sweetalert2 from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/authenticationSlice";
 import { RootState } from '../main';
+import { AuthenticationState } from '../slice/authenticationSlice';
+import Home from '../pages/Home';
+
 
 interface Props {
   onCreateAccountClick: () => void;
-}
-
-interface AuthenticationState {
-  loggedIn: boolean;
 }
 
 export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element {
@@ -23,7 +22,7 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   const loggedIn = useSelector((state: RootState) => (state.authentication as AuthenticationState).loggedIn);
 
   console.log(loggedIn)
-    
+  
   const handleLogin = () => {
     dispatch(login());
   };
@@ -108,7 +107,8 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   };
 
 return (
-  <div className="login-form container">
+    <>
+      {!loggedIn ? (<div className="login-form container">
     <section className="wrapper">
       <div className="heading">
         <h1 className="text text-large">Sign In</h1>
@@ -160,6 +160,7 @@ return (
         </div>
       </form>
     </section>
-  </div>
-)
+  </div>) : (<Home />)}
+    </>
+  )
 }

@@ -8,11 +8,13 @@ contract VotingEvent {
     CandidateManager private candidateManager;
     ParticipantManager private participantManager;
     address private host;
+    bool private isCurrentlyVoting;
 
-    constructor(address _host) {
+    constructor(address _host, IHasher _hasher) {
         candidateManager = new CandidateManager();
-        participantManager = new ParticipantManager();
+        participantManager = new ParticipantManager(candidateManager, _hasher);
         host = _host;
+        isCurrentlyVoting = false;
     }
 
     function getCandidateManager() public view returns (CandidateManager) {
@@ -25,5 +27,13 @@ contract VotingEvent {
 
     function getHost() public view returns (address) {
         return host;
+    }
+
+    function getIsCurrentlyVoting() public view returns (bool) {
+        return isCurrentlyVoting;
+    }
+
+    function setIsCurrentlyVoting(bool _isCurrentlyVoting) public {
+        isCurrentlyVoting = _isCurrentlyVoting;
     }
 }

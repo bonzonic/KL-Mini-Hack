@@ -17,6 +17,7 @@
     "chai-as-promised": "^7.1.1"
   },
   "dependencies": {
+    "circomlibjs": "^0.1.7",
     "zk-merkle-tree": "^1.0.4"
   }
 }

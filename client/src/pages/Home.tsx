@@ -15,14 +15,11 @@ export interface QuestionAndCandidates {
 
 export interface Election {
     name: string,
-    instructin?: string,
+    instruction?: string,
     date_begin?: Date,
     date_end?: Date,
     questionsAndCandidates: QuestionAndCandidates[]
 }
-
-const election = "Presidential Election 2023"
-const instruction = "Please view the questions and choices and make your selections."
 
 const questionsAndCandidates = [
     {
@@ -42,6 +39,13 @@ const questionsAndCandidates = [
     }
 ]
 
+const election: Election = {
+    name: "Presidential Election 2023",
+    instruction: "Please view the questions and choices and make your selections.",
+    questionsAndCandidates: questionsAndCandidates,
+}
+
+
 const VOTE_STEP = 1
 const CONFIRM_VOTE_STEP = 2
 const VOTE_HAS_BEEN_SENT_STEP = 3
@@ -50,8 +54,7 @@ const VOTE_HAS_BEEN_SENT_STEP = 3
 const Home = () => {
     const [ballot, setBallot] = useState<Vote>({})
     const [step, setStep] = useState<number>(1)
-
-    const url = "api/vote" // Change to appropriate API url
+    const [userCanVote, setUserCanVote] = useState(true)
 
     const handleSelection = (id: number, selection: string) => {
         console.log("handleSelection() id:", id, ", selection:", selection)
@@ -63,24 +66,72 @@ const Home = () => {
     const handleSubmit = async () => {
         console.log("ballot", ballot)
 
+        const url = "http://localhost:8080/user/vote"
+
+        const userAndBallot = {
+            email: localStorage.getItem("email"),
+            electionName: election.name,
+            ballot: ballot
+        }
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(ballot),
+            body: JSON.stringify(userAndBallot),
         })
 
         if (!response.ok) {
             throw new Error("Net work response was not ok")
         }
 
-        const result = response.json()
-
-        console.log("Success: ", result)
+        console.log("Success: ", response)
 
         nextStep()
     }
+
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    // REMOVE THIS IF YOU WANT 
+    const canUserVote = async (electionName: string) => {
+        /* User can vote if they have not */
+        const url = "http://localhost:8080/user"
+
+        const userEmail = localStorage.email as string;
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email: userEmail}),
+        })
+
+        if (!response.ok) {
+            throw new Error("Net work response was not ok")
+        }
+
+        const result = await response.json()
+
+        console.log(result)
+
+        try {
+            if (electionName in await result.history) {
+                setUserCanVote(false)
+            } else {
+                setUserCanVote(true)
+            }
+        } catch (err) {
+            console.log(err)
+            setUserCanVote(true)
+        }
+    }
+    ////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////
 
     const nextStep = () => {
         setStep(prevStep => Math.min(VOTE_HAS_BEEN_SENT_STEP, prevStep + 1))
@@ -90,34 +141,45 @@ const Home = () => {
         setStep(prevStep => Math.max(VOTE_STEP, prevStep - 1))
     }
 
-    switch(step) {
-        case CONFIRM_VOTE_STEP:
-            return (
-                <div className="container mx-auto">
-                    <BallotConfirm ballot={ballot} questionsAndCandidates={questionsAndCandidates} prevStep={prevStep} handleSubmit={handleSubmit}/>
-                </div>
-            )
-        
-        case VOTE_HAS_BEEN_SENT_STEP:
-            return (
-                <div className="container mx-auto">
-                    <BallotSent />
-                </div>
-            )
 
-        default: // `VOTE_STEP` is the default step
-            return (
-                <div className="container mx-auto">
-                    <Ballot electionName={election} 
-                        instruction={instruction} 
-                        questionsAndCandidates={questionsAndCandidates} 
-                        ballot={ballot}
-                        handleSelection={handleSelection}
-                        nextStep={nextStep}
-                    />
-                </div>
-            )
-            
+    //canUserVote(election.name)
+    
+
+
+
+    if (userCanVote) {
+        switch(step) {
+            case CONFIRM_VOTE_STEP:
+                return (
+                    <div className="container mx-auto">
+                        <BallotConfirm ballot={ballot} election={election} prevStep={prevStep} handleSubmit={handleSubmit}/>
+                    </div>
+                )
+
+            default: // `VOTE_STEP` is the default step
+                return (
+                    <div className="container mx-auto">
+                        <Ballot
+                            election={election}
+                            ballot={ballot}
+                            handleSelection={handleSelection}
+                            nextStep={nextStep}
+                        />
+                    </div>
+                )
+        }
+    } else if (step === VOTE_HAS_BEEN_SENT_STEP) {
+        return (
+            <div className="container mx-auto">
+                <BallotSent />
+            </div>
+        )
+    } else {
+        return (
+            <div className="container mx-auto">
+                <h1>You may not vote twice.</h1>
+            </div>
+        )
     }
 }
 

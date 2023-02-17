@@ -20,18 +20,19 @@ contract CandidateManager {
         return output;
     }
 
-    function addCandidate(string memory _name) public returns (bool) {
+    function isCandidateExist(string memory _name) public view returns (bool) {
+        return keccak256(abi.encodePacked(candidates[_name].name)) != keccak256(abi.encodePacked("")) || candidates[_name].votes != 0;
+    }
+
+    function addCandidate(string memory _name) public {
         Candidate memory candidate = candidates[_name];
 
-        if (keccak256(abi.encodePacked(candidate.name)) == keccak256(abi.encodePacked("")) && candidate.votes == 0) {
-            candidateKeys.push(_name);
-            candidates[_name].name = _name;
-            candidates[_name].votes = 0;
+        require(keccak256(abi.encodePacked(_name)) != keccak256(abi.encodePacked("")), "Name cannot be blank");
+        require(keccak256(abi.encodePacked(candidate.name)) == keccak256(abi.encodePacked("")) && candidate.votes == 0, "Name already exist");
 
-            return true;
-        } else {
-            return false;
-        }
+        candidateKeys.push(_name);
+        candidates[_name].name = _name;
+        candidates[_name].votes = 0;
     }
 
     function removeCandidate(string memory _name) public {
