@@ -135,6 +135,15 @@ app.post("/zk/registerVote", async (req, res) => {
 });
 
 // Candidate Manipulation Section ================================================================================================
+app.get("/zk/getCandidates", async (req, res) => {
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+  
+    const result = await candidateManagerContract.methods.getCandidates().call();
+  
+    res.status(200).send(result);
+  });
+
 
 app.post("/zk/getCandidates", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
@@ -148,8 +157,8 @@ app.post("/zk/getCandidates", async (req, res) => {
 app.post("/zk/addCandidate", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
   const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
-
-  const addCandidate = candidateManagerContract.methods.addCandidate(req.body.name);
+  const candidate = req.body.candidate;
+  const addCandidate = candidateManagerContract.methods.addCandidate(candidate);
 
   await callPaidFunction(await votingEventContract.methods.getCandidateManager().call(), addCandidate);
 
