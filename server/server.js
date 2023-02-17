@@ -169,7 +169,8 @@ app.get("/zk/getCandidates", async (req, res) => {
     const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
   
     const result = await candidateManagerContract.methods.getCandidates().call();
-  
+    
+    //res.status(200).send(JSON.stringify({"HE":1}));
     res.status(200).send(result);
   });
 
