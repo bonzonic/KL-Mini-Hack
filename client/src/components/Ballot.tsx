@@ -50,7 +50,7 @@ const Ballot = (props: BallotProps) => {
                             />
                 }) : <p>Titles and Candidates information are missing</p>
             }
-            <button onClick={handleClick} className="border-2 border-black rounded bg-gray-200 px-2 py-1">Continue</button>
+            <button onClick={handleClick} className="border-2 border-black rounded bg-gray-200 px-2 py-1 transition duration-500 hover:scale-90">Continue</button>
         </div>
     )
 }

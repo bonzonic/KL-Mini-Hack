@@ -14,7 +14,7 @@ module.exports = function (deployer, network, accounts) {
     VotingEventAddr: VotingEvent.address
   }
 
-  fs.writeFile('contractAddr.json', JSON.stringify(data), (err) => {
+  fs.writeFileSync('contractAddr.json', JSON.stringify(data), (err) => {
     if (err) throw err;
     console.log('Data written to file');
   });
