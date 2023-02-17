@@ -282,7 +282,6 @@ async function clearCandidates() {
 
 app.listen(8080, () => {
   console.log("Listening on port 8080");
-  clearCandidates()
   getCandidate().then(data =>{
     JSON.stringify(data)
     console.log(data)

@@ -4,6 +4,7 @@ import './Navbar.css'
 import Sweetalert2 from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/authenticationSlice";
+import logo from "../assets/cabbage.svg";
 
 const RootLayout = () => {
     const loggedIn = useSelector((state: boolean) => (state.authentication! as AuthenticationState).loggedIn);
@@ -33,7 +34,8 @@ const RootLayout = () => {
             <header className=' nav-container text-black'>
                 <nav className="flex justify-between">
                     <div className="flex flex-row items-center">
-                        <NavLink className="text-black my-5 mx-3 transition duration-500 hover:scale-110" to="/">
+                        <NavLink className="flex items-center text-black my-5 mx-3 transition duration-500 hover:scale-110" to="/">
+                            <img className="logo w-10 h-10" src={logo} />
                             <h1 className="ml-2">ZKP Voting System</h1>
                         </NavLink>
                     </div>
