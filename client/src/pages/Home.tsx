@@ -26,16 +26,6 @@ const questionsAndCandidates = [
         id: 0,
         question: "Please select a candidate for President",
         candidates: ["Obama", "Trump", "Biden"]
-    },
-    {
-        id: 1,
-        question: "Please select a candidate for Treasurer",
-        candidates: ["Bill", "Clinton"]
-    },
-    {
-        id: 2,
-        question: "Please select a candidate for Mayor",
-        candidates: ["Peter", "Michael Jackson"]
     }
 ]
 
@@ -142,10 +132,7 @@ const Home = () => {
     }
 
 
-    //canUserVote(election.name)
-    
-
-
+    //canUserVote(election.name)  
 
     if (userCanVote) {
         switch(step) {

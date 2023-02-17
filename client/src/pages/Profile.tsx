@@ -15,6 +15,7 @@ const Profile = (props: any) => {
     const [Username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [userAddress, setUserAddress] = useState<string>('');
+    const [userHistory, setUserHistory] = useState([]);
 
     useEffect(() => {
         const sr = ScrollReveal();
@@ -56,7 +57,7 @@ const Profile = (props: any) => {
             origin: 'left',
             reset: true,
             viewFactor: 0.2,  
-            delay: 500,
+            delay: 650,
           });
         
       }, []);
@@ -71,8 +72,11 @@ const Profile = (props: any) => {
             text: 'You are not logged in!',
           }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '/login'; // replace '/login' with the actual URL of your login page
+                window.location.href = '/login'; 
               }
+            else {
+                window.location.href = '/login'; 
+            }
           })
       }
 
@@ -92,9 +96,24 @@ const Profile = (props: any) => {
         // console.log(json)
         // console.log(Object(json)["username"])
         // console.log(Object.keys(json));
+        
         setUsername(Object(json)["username"])
         setEmail(localStorage.getItem("email")!)
         setUserAddress(Object(json)["wallet"])
+
+        if (loggedIn) {
+            let history = Object(json)["history"]
+            let history_temp = [];
+    
+            for (const key in history) {
+              for (const nestedKey in history[key]) {
+                const arr = [key, history[key][nestedKey]];
+                history_temp.push(arr);
+              }
+            }
+            
+            setUserHistory(history_temp)
+        }
     });
 
 
@@ -167,9 +186,27 @@ const Profile = (props: any) => {
 
     Boolean(userAddress)
 
+    const handleViewHistory = () => {
+        let historyString = '';
+      
+        if (userHistory.length === 0) {
+          historyString = 'No history available';
+        } else {
+          userHistory.forEach((historyItem, index) => {
+            historyString += `${index + 1}. ${historyItem[0]} - ${historyItem[1]}`;
+          });
+        }
+      
+        Swal.fire({
+          icon: 'info',
+          iconColor: 'teal',
+          title: 'History',
+          text: historyString,
+        });
+      }
 
     return (
-        <div className="wrapper-dashboard">
+        <div className="wrapper-dashboard my-10">
             {loggedIn && 
             (
                 <div className="dashboard grid md:grid-cols-2 md:grid-rows-4 gap-6 m-6">
@@ -213,15 +250,16 @@ const Profile = (props: any) => {
                             <img src={wallet} className="w-10 h-10" alt="Crypto wallet" />
                             <h2 className="text-3xl ml-4">Crypto Wallet</h2>
                         </div>
-                        <Wallet address={userAddress}
+                        <Wallet address={userAddress} 
                             handleAddUserAddress={handleAddUserAddress} 
                         />
                     </div>
 
-                    <div className='grid-item col-span-2 history-profile'>
-                        <div className="flex flex-row">
-                            <img src={history} className="w-10 h-10 mr-auto" alt="History" />
-                            <h2 className="text-3xl ml-4 text-left">Voter History</h2>
+                    <div className='grid-item col-span-2 history-profile pb-0'>
+                        <div className="flex flex-row items-center">
+                            <img src={history} className="w-10 h-10 " alt="History" />
+                            <h2 className="text-3xl ml-4 text-left mr-auto ">Voter History</h2>
+                            <button className="transition duration-500 hover:scale-110 shadow-lg  py-2 px-4 bg-white-500  text-black  rounded" onClick={ handleViewHistory } >View History</button>
                         </div>
                     </div>
                 </div>
@@ -229,5 +267,14 @@ const Profile = (props: any) => {
         </div>
     )
 }
+
+// {userHistory.map((historyItem, index) => (
+//     <div key={index}>
+//         <div className='border rounded-lg px-4 py-2'>
+//             <h3 className='text-lg font-medium'>{historyItem[0]}</h3>
+//             <p className='text-gray-500'>{historyItem[1]}</p>
+//         </div>
+//     </div>
+// ))}
 
 export default Profile

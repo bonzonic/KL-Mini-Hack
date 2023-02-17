@@ -9,3 +9,9 @@
     /* place-items: center; */
     height: calc(100vh);
 }
+
+@media (max-width: 768px) {
+    .history-profile {
+      grid-column: span 1;
+    }
+  }
