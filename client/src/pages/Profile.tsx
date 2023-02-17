@@ -11,12 +11,10 @@ import { useSelector } from 'react-redux';
 import Sweetalert2 from 'sweetalert2';
 import Swal from 'sweetalert2'
 
-import { AuthenticationState } from '../slice/authenticationSlice';
-
 const Profile = (props: any) => {
     const [Username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [userAddress, setUserAddress] = useState('');
+    const [userAddress, setUserAddress] = useState<string>('');
 
     useEffect(() => {
         const sr = ScrollReveal();
@@ -141,6 +139,7 @@ const Profile = (props: any) => {
                   if (!response.ok) {
                     throw new Error(response.statusText)
                   }
+                  updateAddress()
                   console.log(response.status)
                   console.log("Added user address successfully")
                   return response.status
@@ -166,64 +165,67 @@ const Profile = (props: any) => {
 
     }
 
-    
+    Boolean(userAddress)
 
 
     return (
         <div className="wrapper-dashboard">
-            {loggedIn && (
-            <div className="dashboard grid md:grid-cols-2 md:grid-rows-4 gap-6 m-6">
-                <div className="grid-item row-span-3 profile-info">
-                    <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
-                    <h1 className="text-5xl text-center mt-3">{Username}</h1>
-                    <table className="profile-table mt-10">
-                        <tr>
-                            <td>Phone</td>
-                            <td className="text-right">{"+60 123 456 789"}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td className="text-right">{email}</td>
-                        </tr>
-                        <tr>
-                            <td>Date of Birth</td>
-                            <td className="text-right">{"2003/1/1"}</td>
-                        </tr>
-                        <tr>
-                            <td>IC Number</td>
-                            <td className="text-right">{"030101-15-1234"}</td>
-                        </tr>
-                    </table>
-                </div>
+            {loggedIn && 
+            (
+                <div className="dashboard grid md:grid-cols-2 md:grid-rows-4 gap-6 m-6">
 
-                <div className="grid-item crypto-wallet flex justify-center items-center row-span-1 flex-col">
-                    <div className='flex flex-row justify-center items-end'>
-                        <h2 className="text-6xl text-right">
-                            {new Intl.NumberFormat('en-us').format(0)}
-                        </h2>
-                        <p className="text-right">CBC</p>
+                    <div className="grid-item row-span-3 profile-info">
+
+                        <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
+                        <h1 className="text-5xl text-center mt-3">{Username}</h1>
+                        <table className="profile-table mt-10">
+                            <tr>
+                                <td>Phone</td>
+                                <td className="text-right">{"+60 123 456 789"}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td className="text-right">{email}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td className="text-right">{"2003/1/1"}</td>
+                            </tr>
+                            <tr>
+                                <td>IC Number</td>
+                                <td className="text-right">{"030101-15-1234"}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div className="grid-item crypto-wallet flex justify-center items-center row-span-1 flex-col">
+                        <div className='flex flex-row justify-center items-end'>
+                            <h2 className="text-6xl text-right">
+                                {new Intl.NumberFormat('en-us').format(0)}
+                            </h2>
+                            <p className="text-right">CBC</p>
+                        </div>
+                    </div>
+
+                    <div className="grid-item row-span-2 crypto-wallet-storage ">
+                        <div className="flex flex-row">
+                            <img src={wallet} className="w-10 h-10" alt="Crypto wallet" />
+                            <h2 className="text-3xl ml-4">Crypto Wallet</h2>
+                        </div>
+                        <Wallet address={userAddress}
+                            handleAddUserAddress={handleAddUserAddress} 
+                        />
+                    </div>
+
+                    <div className='grid-item col-span-2 history-profile'>
+                        <div className="flex flex-row">
+                            <img src={history} className="w-10 h-10 mr-auto" alt="History" />
+                            <h2 className="text-3xl ml-4 text-left">Voter History</h2>
+                        </div>
                     </div>
                 </div>
-
-                {/* Connect crypto wallet: https://www.coinbase.com/cloud/discover/dev-foundations/use-web3-react-to-connect-wallet */}
-                <div className="grid-item row-span-2 crypto-wallet-storage ">
-                    <div className="flex flex-row">
-                        <img src={wallet} className="w-10 h-10" alt="Crypto wallet" />
-                        <h2 className="text-3xl ml-4">Crypto Wallet</h2>
-                    </div>
-                    <Wallet address={userAddress}
-                        handleAddUserAddress={handleAddUserAddress} 
-                    />
-                </div>
-
-                <div className='grid-item col-span-2 history-profile'>
-                    <div className="flex flex-row">
-                        <img src={history} className="w-10 h-10 mr-auto" alt="History" />
-                        <h2 className="text-3xl ml-4 text-left">Voter History</h2>
-                    </div>
-                </div>
-            </div>
-        )}
+            )}
         </div>
     )
 }
