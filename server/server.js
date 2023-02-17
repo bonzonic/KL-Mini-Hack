@@ -164,6 +164,15 @@ app.post("/zk/registerVote", async (req, res) => {
 });
 
 // Candidate Manipulation Section ================================================================================================
+app.get("/zk/getCandidates", async (req, res) => {
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+  
+    const result = await candidateManagerContract.methods.getCandidates().call();
+  
+    res.status(200).send(result);
+  });
+
 
 app.post("/zk/getCandidates", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
@@ -177,8 +186,8 @@ app.post("/zk/getCandidates", async (req, res) => {
 app.post("/zk/addCandidate", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
   const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
-
-  const addCandidate = candidateManagerContract.methods.addCandidate(req.body.name);
+  const candidate = req.body.candidate;
+  const addCandidate = candidateManagerContract.methods.addCandidate(candidate);
 
   await callPaidFunction(await votingEventContract.methods.getCandidateManager().call(), addCandidate);
 
@@ -206,6 +215,36 @@ app.post("/zk/clearCandidates", async (req, res) => {
 
   res.status(200).send("Success")
 })
+
+app.post('/user/vote', (req, res) => {
+    const email = req.body.email
+    const electionName= req.body.electionName
+    const ballot = req.body.ballot
+
+    if (!user_database.hasOwnProperty(email)) {
+        console.log("The user with the email ", email, " is not registered!")
+        res.status(401).send('Invalid email')
+    }
+    else {
+        if (!user_database[email][1].hasOwnProperty("history")) {
+            user_database[email][1]["history"] = {}
+        }
+
+        user_database[email][1]["history"][electionName] = ballot
+
+        console.log(user_database[email][1]["history"])
+
+        // user_database[email][1]["history"] = [...user_database[email][1]["history"], {
+        //     electionName: electionName,
+        //     ballot: ballot,
+        // }]
+        
+        console.log(JSON.stringify(user_database))
+    }
+
+    res.status(200).send("Vote succesful")
+})
+
 
 app.post("/zk/checkCandidate", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());

@@ -30,17 +30,17 @@ const RootLayout = () => {
     
     return (
         <div>
-            <header className='bg-teal-700 shadow-md px-3 py-6 text-lg sticky'>
+            <header className=' nav-container text-black'>
                 <nav className="flex justify-between">
                     <div className="flex flex-row items-center">
-                        <NavLink className="text-white" to="/">
+                        <NavLink className="text-black my-5 mx-3 transition duration-500 hover:scale-110" to="/">
                             <h1 className="ml-2">ZKP Voting System</h1>
                         </NavLink>
                     </div>
-                    <div className="flex flex-row items-center text-white">
-                        {loggedIn ? (<span className="nav-list-item" onClick={handleLog}>Log In</span>) :
+                    <div className="flex flex-row items-center">
+                        {loggedIn ? (<span className="nav-list-item font-bold" onClick={handleLog}>Log In</span>) :
                         (<NavLink to="login" className="nav-list-item">Log In</NavLink>)}
-                        <NavLink to="profile" className="rounded-full bg-gray-100 p-1 mr-2 shadow-lg border-2 border-solid border-teal-600">
+                        <NavLink to="profile" className="rounded-full bg-gray-100 p-1 mr-2 shadow-lg border-2 border-solid border-teal-600 transition duration-500 hover:scale-110">
                             <img src={profileLogo} className="w-6 h-6 !fill-white profile-icon-nav" alt="Profile Logo" />
                         </NavLink>
                     </div>

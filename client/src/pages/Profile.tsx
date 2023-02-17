@@ -3,6 +3,8 @@ import Wallet from '../components/Wallet';
 import ScrollReveal from 'scrollreveal';
 import profilePic from '../assets/person-fill.svg'
 import wallet from '../assets/wallet2.svg'
+import { AuthenticationState } from '../slice/authenticationSlice';
+import { RootState } from '../main';
 import history from '../assets/history.svg'
 import './Profile.css'
 import { useSelector } from 'react-redux';
