@@ -5,6 +5,7 @@ const { json } = require("express");
 const multer = require("multer");
 const Web3 = require("web3");
 const { generateCommitment } = require("zk-merkle-tree");
+const ganache = require("ganache")
 
 app.use(
   cors({
@@ -18,14 +19,19 @@ app.use(
 );
 
 // web3 instance and helpers ===================================================
-const web3 = new Web3("http://127.0.0.1:9545/");
+const web3 = new Web3("http://172.17.0.2:8545");
 const ethAcc = {
-  address: "0x4525478C535f6a452492b7134dfC440CeEa23D68",
-  privateKey: "a2a8b8f0ac6783368b7910dc7a88ba00834bf13c38a6ad0fec31796d500a8133"
+  address: "0x433220a86126efe2b8c98a723e73ebad2d0cbadc",
+  privateKey: "0x9e72e5257645bebc6e3423696be498c6973cc23cee4aaad507d04331d51fcef6"
 };
 
+const contractAddr = {
+  "VotingEventAddr": "0x176aA34a1a36F0A43736aBDcd3D9f011a107cdF8"
+}
+
 const getContractAddr = () => {
-  return require("../truffle-project/contractAddr.json").VotingEventAddr;
+  // return require("../truffle-project/contractAddr.json").VotingEventAddr;
+  return contractAddr["VotingEventAddr"];
 }
 
 const getAbi = (fileName) => {
@@ -184,6 +190,10 @@ app.post("/zk/checkCandidate", async (req, res) => {
   res.status(200).send(await candidateManagerContract.methods.isCandidateExist(req.body.name).call())
 })
 
+app.post("/zk/votingAddr", (req, res) => {
+  contractAddr["VotingEventAddr"] = req.body.VotingEventAddr
+  res.status(200).send("success");
+})
 
 app.listen(8080, () => {
   console.log("Listening on port 8080");

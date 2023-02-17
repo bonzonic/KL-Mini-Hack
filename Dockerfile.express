@@ -1,0 +1,18 @@
+FROM node:latest as build
+
+WORKDIR /app
+COPY ./server /app/server
+COPY ./truffle-project /app/truffle-project
+
+RUN apt update
+RUN apt install nodejs -y
+
+WORKDIR /app/truffle-project
+RUN npm install
+
+WORKDIR /app/server
+RUN npm install
+
+EXPOSE 8080
+
+CMD ["npm", "run", "dev"]

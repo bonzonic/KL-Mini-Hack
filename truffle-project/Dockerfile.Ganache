@@ -1,0 +1,17 @@
+FROM node:latest as build
+
+WORKDIR /app
+COPY ./ /app/
+
+RUN apt update
+RUN apt install nodejs -y
+
+RUN npm install ganache --global
+RUN npm install -g truffle
+RUN npm install
+
+ENV PORT 8545
+
+EXPOSE 8545
+
+CMD ["ganache", "-s", "1234", "-h", "0.0.0.0"]
