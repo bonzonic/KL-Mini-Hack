@@ -41,7 +41,15 @@ const Ballot = (props: BallotProps) => {
                 let resJson = response.json();
                 return resJson;
             }).then(json => {
-                if ("history" in json) {
+                if (!("wallet" in json)) {
+                    Sweetalert2.fire({
+                        icon: 'error',
+                        iconColor: 'teal',
+                        title: 'Attach a wallet!',
+                        text: 'Navigate to profile to attach',
+                      })
+                }
+                else if ("history" in json) {
                     if (props.election.name in json["history"]) {
                         Sweetalert2.fire({
                             icon: 'error',
