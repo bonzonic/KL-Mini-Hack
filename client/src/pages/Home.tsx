@@ -23,22 +23,12 @@ export interface Election {
 }
 
 const questionsAndCandidates = [
-  {
-    id: 0,
-    question: "Please select a candidate for President",
-    candidates: ["Obama", "Trump", "Biden"],
-  },
-  {
-    id: 1,
-    question: "Please select a candidate for Treasurer",
-    candidates: ["Bill", "Clinton"],
-  },
-  {
-    id: 2,
-    question: "Please select a candidate for Mayor",
-    candidates: ["Peter", "Michael Jackson"],
-  },
-];
+    {
+        id: 0,
+        question: "Please select a candidate for President",
+        candidates: ["Obama", "Trump", "Biden"]
+    }
+]
 
 const election: Election = {
   name: "Presidential Election 2023",
@@ -113,7 +103,7 @@ const Home = () => {
               })
               .then((json) => {
                 setCoins(Object(json)["coins"]);
-                console.log('yipee coins!')
+                console.log("yipee coins!");
               });
           }
         });
@@ -172,6 +162,8 @@ const Home = () => {
 
   //canUserVote(election.name)
 
+  //canUserVote(election.name)
+
   if (userCanVote) {
     switch (step) {
       case CONFIRM_VOTE_STEP:
@@ -213,4 +205,4 @@ const Home = () => {
   }
 };
 
-export default Home;
+export default Home

@@ -23,9 +23,9 @@ app.use(
 // web3 instance and helpers ===================================================
 const web3 = new Web3("http://127.0.0.1:9545/");
 const ethAcc = {
-  address: "0x4525478C535f6a452492b7134dfC440CeEa23D68",
+  address: "0x696459092307889bd30db6356f315e8c5ada32f0",
   privateKey:
-    "a2a8b8f0ac6783368b7910dc7a88ba00834bf13c38a6ad0fec31796d500a8133",
+    "e64dfb513cc4b7c92dc1958096cbd38edeb275aad9cf384b366711b35a3d1fd6",
 };
 
 const getContractAddr = () => {
@@ -224,14 +224,11 @@ app.post("/zk/registerVote", async (req, res) => {
 
 // Candidate Manipulation Section ================================================================================================
 app.get("/zk/getCandidates", async (req, res) => {
-  const votingEventContract = new web3.eth.Contract(
-    getAbi("VotingEvent.json"),
-    getContractAddr()
-  );
-  const candidateManagerContract = new web3.eth.Contract(
-    getAbi("CandidateManager.json"),
-    await votingEventContract.methods.getCandidateManager().call()
-  );
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+  
+    //result = [["Trump", 0], ["Joe", 0]]
+
 
   const result = await candidateManagerContract.methods.getCandidates().call();
 
@@ -253,6 +250,7 @@ app.post("/zk/getCandidates", async (req, res) => {
 
   res.status(200).send(result);
 });
+
 
 app.post("/zk/addCandidate", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(
@@ -363,6 +361,36 @@ app.post("/zk/checkCandidate", async (req, res) => {
     );
 });
 
+async function addCandidate(candidate_input) {
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+    const candidate = candidate_input;
+    const addCandidate = candidateManagerContract.methods.addCandidate(candidate);
+    await callPaidFunction(await votingEventContract.methods.getCandidateManager().call(), addCandidate);
+}
+
+async function getCandidate() {
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+    const result = await candidateManagerContract.methods.getCandidates().call();
+    return result
+}
+
+async function clearCandidates() {
+    const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
+    const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
+  
+    const clearCandidates = candidateManagerContract.methods.clearCandidates();
+  
+    await callPaidFunction(await votingEventContract.methods.getCandidateManager().call(), clearCandidates);
+  
+}
+
 app.listen(8080, () => {
   console.log("Listening on port 8080");
+  clearCandidates()
+  getCandidate().then(data =>{
+    JSON.stringify(data)
+    console.log(data)
+  })
 });

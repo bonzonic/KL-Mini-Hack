@@ -17,6 +17,7 @@ const Profile = (props: any) => {
   const [Username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [userAddress, setUserAddress] = useState<string>("");
+  const [userHistory, setUserHistory] = useState([]);
 
   useEffect(() => {
     const sr = ScrollReveal();
@@ -29,7 +30,6 @@ const Profile = (props: any) => {
       viewFactor: 0.5,
       delay: 0,
     });
-
     sr.reveal(".crypto-wallet", {
       duration: 250,
       distance: "40px",
@@ -96,9 +96,24 @@ const Profile = (props: any) => {
       // console.log(json)
       // console.log(Object(json)["username"])
       // console.log(Object.keys(json));
+
       setUsername(Object(json)["username"]);
       setEmail(localStorage.getItem("email")!);
       setUserAddress(Object(json)["wallet"]);
+
+      if (loggedIn) {
+        let history = Object(json)["history"];
+        let history_temp = [];
+
+        for (const key in history) {
+          for (const nestedKey in history[key]) {
+            const arr = [key, history[key][nestedKey]];
+            history_temp.push(arr);
+          }
+        }
+
+        setUserHistory(history_temp);
+      }
     });
 
   const updateAddress = async () => {
@@ -167,8 +182,27 @@ const Profile = (props: any) => {
 
   Boolean(userAddress);
 
+  const handleViewHistory = () => {
+    let historyString = "";
+
+    if (userHistory.length === 0) {
+      historyString = "No history available";
+    } else {
+      userHistory.forEach((historyItem, index) => {
+        historyString += `${index + 1}. ${historyItem[0]} - ${historyItem[1]}`;
+      });
+    }
+
+    Swal.fire({
+      icon: "info",
+      iconColor: "teal",
+      title: "History",
+      text: historyString,
+    });
+  };
+
   return (
-    <div className="wrapper-dashboard">
+    <div className="wrapper-dashboard my-10">
       {loggedIn && (
         <div className="dashboard grid md:grid-cols-2 md:grid-rows-4 gap-6 m-6">
           <div className="grid-item row-span-3 profile-info">
@@ -200,7 +234,9 @@ const Profile = (props: any) => {
 
           <div className="grid-item crypto-wallet flex justify-center items-center row-span-1 flex-col">
             <div className="flex flex-row justify-center items-end">
-              <h2 className="text-6xl text-right">{coins}</h2>
+              <h2 className="text-6xl text-right">
+                {coins}
+              </h2>
               <p className="text-right">CBC</p>
             </div>
           </div>
@@ -216,10 +252,18 @@ const Profile = (props: any) => {
             />
           </div>
 
-          <div className="grid-item col-span-2 history-profile">
-            <div className="flex flex-row">
-              <img src={history} className="w-10 h-10 mr-auto" alt="History" />
-              <h2 className="text-3xl ml-4 text-left">Voter History</h2>
+          <div className="grid-item col-span-2 history-profile pb-0">
+            <div className="flex flex-row items-center">
+              <img src={history} className="w-10 h-10 " alt="History" />
+              <h2 className="text-3xl ml-4 text-left mr-auto ">
+                Voter History
+              </h2>
+              <button
+                className="transition duration-500 hover:scale-110 shadow-lg  py-2 px-4 bg-white-500  text-black  rounded"
+                onClick={handleViewHistory}
+              >
+                View History
+              </button>
             </div>
           </div>
         </div>
@@ -227,5 +271,14 @@ const Profile = (props: any) => {
     </div>
   );
 };
+
+// {userHistory.map((historyItem, index) => (
+//     <div key={index}>
+//         <div className='border rounded-lg px-4 py-2'>
+//             <h3 className='text-lg font-medium'>{historyItem[0]}</h3>
+//             <p className='text-gray-500'>{historyItem[1]}</p>
+//         </div>
+//     </div>
+// ))}
 
 export default Profile;

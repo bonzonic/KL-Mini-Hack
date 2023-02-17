@@ -45,7 +45,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// based on https://github.com/tornadocash/tornado-core/blob/master/contracts/Tornado.sol\r\n// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.17;\r\n\r\nimport \"./MerkleTreeWithHistory.sol\";\r\n\r\ninterface IVerifier {\r\n    function verifyProof(\r\n        uint[2] memory a,\r\n        uint[2][2] memory b,\r\n        uint[2] memory c,\r\n        uint[2] memory input\r\n    ) external returns (bool r);\r\n}\r\n\r\ncontract ZKTree is MerkleTreeWithHistory {\r\n    mapping(bytes32 => bool) public nullifiers;\r\n    mapping(bytes32 => bool) public commitments;\r\n\r\n    IVerifier public immutable verifier;\r\n\r\n    event Commit(\r\n        bytes32 indexed commitment,\r\n        uint32 leafIndex,\r\n        uint256 timestamp\r\n    );\r\n\r\n    constructor(\r\n        uint32 _levels,\r\n        IHasher _hasher,\r\n        IVerifier _verifier\r\n    ) MerkleTreeWithHistory(_levels, _hasher) {\r\n        verifier = _verifier;\r\n    }\r\n\r\n    function _commit(bytes32 _commitment) internal {\r\n        require(!commitments[_commitment], \"The commitment has been submitted\");\r\n\r\n        commitments[_commitment] = true;\r\n        uint32 insertedIndex = _insert(_commitment);\r\n        emit Commit(_commitment, insertedIndex, block.timestamp);\r\n    }\r\n\r\n    function _nullify(\r\n        bytes32 _nullifier,\r\n        bytes32 _root,\r\n        uint[2] memory _proof_a,\r\n        uint[2][2] memory _proof_b,\r\n        uint[2] memory _proof_c\r\n    ) internal {\r\n        require(!nullifiers[_nullifier], \"The nullifier has been submitted\");\r\n        require(isKnownRoot(_root), \"Cannot find your merkle root\");\r\n        require(\r\n            verifier.verifyProof(\r\n                _proof_a,\r\n                _proof_b,\r\n                _proof_c,\r\n                [uint256(_nullifier), uint256(_root)]\r\n            ),\r\n            \"Invalid proof\"\r\n        );\r\n\r\n        nullifiers[_nullifier] = true;        \r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\Euan Lim\\OneDrive\\Desktop\\Hackathons\\KL-Mini-Hack\\truffle-project\\contracts\\ZKTree.sol",
+  "sourcePath": "D:\\BlockChain\\KL-Mini-Hack\\truffle-project\\contracts\\ZKTree.sol",
   "ast": {
     "absolutePath": "project:/contracts/ZKTree.sol",
     "exportedSymbols": {
@@ -2201,8 +2201,8 @@
     "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.12",
-  "updatedAt": "2023-02-17T08:06:47.105Z",
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-17T12:55:56.148Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

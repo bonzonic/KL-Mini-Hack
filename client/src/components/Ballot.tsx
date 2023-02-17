@@ -30,7 +30,42 @@ const Ballot = (props: BallotProps) => {
               })
           }
         else {
-            props.nextStep()
+
+            const response = fetch('http://localhost:8080/user', {
+                method: 'POST',
+                body: JSON.stringify({ email: localStorage.getItem("email") }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                let resJson = response.json();
+                return resJson;
+            }).then(json => {
+                if (!("wallet" in json)) {
+                    Sweetalert2.fire({
+                        icon: 'error',
+                        iconColor: 'teal',
+                        title: 'Attach a wallet!',
+                        text: 'Navigate to profile to attach',
+                      })
+                }
+                else if ("history" in json) {
+                    if (props.election.name in json["history"]) {
+                        Sweetalert2.fire({
+                            icon: 'error',
+                            iconColor: 'teal',
+                            title: 'Unable to vote...',
+                            text: 'You have already voted!',
+                          })
+                    }
+                    else {
+                        props.nextStep()
+                    }
+                }
+                else {
+                    props.nextStep()
+                }
+            })
         }
     }
 

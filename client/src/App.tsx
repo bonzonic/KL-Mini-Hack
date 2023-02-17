@@ -3,6 +3,7 @@ import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import Login from './layouts/Login'
 import Profile from './pages/Profile'
+import Dashboard from './pages/Dashboard'
 import './App.css'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />}/>
       <Route path="login" element={<Login />}/>
       <Route path="profile" element={<Profile />}/>
+      <Route path="dashboard" element={<Dashboard />}/>
     </Route>)
 )
 
