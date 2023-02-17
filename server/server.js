@@ -106,6 +106,35 @@ app.post("/user/register", (req, res) => {
 });
 
 
+// User address related 
+app.post("/user/wallet", (req, res) => {
+    const email = req.body.email
+
+    if (!user_database.hasOwnProperty(email)) {
+        console.log("The user with the email ", email, " is not registered!")
+        res.status(401).send('Invalid email')
+    }
+    else {
+        console.log(user_database)
+        user_database[email][1]["wallet"] = req.body.address
+        res.status(200).send("Added user address successfully")
+        console.log(user_database)
+    }
+})
+
+app.get("/user/wallet", (req, res) => {
+    const email = req.body.email
+    if (!user_database.hasOwnProperty(email)) {
+        console.log("The user with the email ", email, " is not registered!")
+        res.status(401).send('Invalid email')
+    }
+    else {
+        const address = user_database[email][1]["wallet"]
+        res.status(200).send(JSON.stringify({address: address}))
+    }
+})
+
+
 // Voting Section ======================================================================================================
 
 app.post("/zk/generateCommitment", async (req, res) => {

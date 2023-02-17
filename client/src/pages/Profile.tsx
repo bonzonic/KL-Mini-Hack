@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
+import Wallet from '../components/Wallet';
 import ScrollReveal from 'scrollreveal';
 import profilePic from '../assets/person-fill.svg'
 import wallet from '../assets/wallet2.svg'
 import { AuthenticationState } from '../slice/authenticationSlice';
 import { RootState } from '../main';
 import history from '../assets/history.svg'
-import coin from '../assets/coin.svg'
-import priceTag from '../assets/tag.svg'
 import './Profile.css'
 import { useSelector } from 'react-redux';
 import Sweetalert2 from 'sweetalert2';
+import Swal from 'sweetalert2'
+
+import { AuthenticationState } from '../slice/authenticationSlice';
 
 const Profile = (props: any) => {
     const [Username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [userAddress, setUserAddress] = useState('');
 
     useEffect(() => {
         const sr = ScrollReveal();
@@ -57,9 +60,10 @@ const Profile = (props: any) => {
             viewFactor: 0.2,  
             delay: 500,
           });
+        
       }, []);
 
-      const loggedIn = useSelector((state: RootState) => (state.authentication! as AuthenticationState).loggedIn);
+      const loggedIn = useSelector((state: RootState) => (state.authentication as AuthenticationState).loggedIn);
 
       if (!loggedIn) {
         Sweetalert2.fire({
@@ -92,13 +96,83 @@ const Profile = (props: any) => {
         // console.log(Object.keys(json));
         setUsername(Object(json)["username"])
         setEmail(localStorage.getItem("email")!)
-
+        setUserAddress(Object(json)["wallet"])
     });
+
+
+    const updateAddress = async () => {
+        const url = 'http://localhost:8080/user'
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email: email})
+        })
+
+        if (!response.ok) {
+            throw new Error("Network was not ok")
+        }
+
+        const result = await response.json()
+        console.log("result", await result.wallet)
+        setUserAddress(await result.wallet)
+    }
+
+    const handleAddUserAddress = async () => {
+        Swal.fire({
+            title: 'Add your crypto wallet.',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Add a Wallet',
+            showLoaderOnConfirm: true,
+            preConfirm: (address) => {
+              return fetch('http://localhost:8080/user/wallet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email: email, address: address}),
+            })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error(response.statusText)
+                  }
+                  console.log(response.status)
+                  console.log("Added user address successfully")
+                  return response.status
+                })
+                .catch(error => {
+                  Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                  )
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                icon: "success",
+                title: `Successfully added a crypto wallet`,
+                // imageUrl: result.value.avatar_url
+              })
+            }
+          })
+
+        updateAddress()
+
+    }
+
+    
+
 
     return (
         <div className="wrapper-dashboard">
             {loggedIn && (
-            <div className="dashboard grid md:grid-cols-2 md:grid-rows-3 gap-6 m-6">
+            <div className="dashboard grid md:grid-cols-2 md:grid-rows-4 gap-6 m-6">
                 <div className="grid-item row-span-3 profile-info">
                     <img src={profilePic} className="w-32 h-32 p-1 mx-auto border-solid border-4 border-teal-500 rounded-full bg-slate-50" alt="profile picture" />
                     <h1 className="text-5xl text-center mt-3">{Username}</h1>
@@ -129,24 +203,21 @@ const Profile = (props: any) => {
                         </h2>
                         <p className="text-right">CBC</p>
                     </div>
-                    
-                    {/* <ul className="flex flex-row justify-evenly w-full mt-8 cbc-actions">
-                        <li>Send</li>
-                        <li>Receive</li>
-                        <li>Buy</li>
-                        <li>Trade</li>
-                    </ul> */}
                 </div>
 
                 {/* Connect crypto wallet: https://www.coinbase.com/cloud/discover/dev-foundations/use-web3-react-to-connect-wallet */}
                 <div className="grid-item row-span-2 crypto-wallet-storage ">
                     <div className="flex flex-row">
                         <img src={wallet} className="w-10 h-10" alt="Crypto wallet" />
-                        <h2 className="text-3xl ml-4">Crypto Wallets</h2>
+                        <h2 className="text-3xl ml-4">Crypto Wallet</h2>
                     </div>
+                    <Wallet address={userAddress}
+                        handleAddUserAddress={handleAddUserAddress} 
+                    />
                 </div>
+
                 <div className='grid-item col-span-2 history-profile'>
-                <div className="flex flex-row">
+                    <div className="flex flex-row">
                         <img src={history} className="w-10 h-10 mr-auto" alt="History" />
                         <h2 className="text-3xl ml-4 text-left">Voter History</h2>
                     </div>
