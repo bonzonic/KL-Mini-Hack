@@ -15,10 +15,10 @@ const Wallet = (props: WalletProps) => {
             </div>
 
             {props.address ? 
-                <button className="bg-slate-50 rounded-xl px-2 py-1 shadow w-full mt-3" 
+                <button className="bg-slate-50 rounded-xl px-2 py-1 shadow w-full mt-3 transition duration-500 hover:scale-110" 
                     onClick={props.handleAddUserAddress}>Edit Crypto Wallet
                 </button> :
-                <button className="bg-slate-50 rounded-xl px-2 py-1 shadow w-full mt-3" 
+                <button className="bg-slate-50 rounded-xl px-2 py-1 shadow w-full mt-3 transition duration-500 hover:scale-110" 
                     onClick={props.handleAddUserAddress}>Add Crypto Wallet
                 </button>
             }
