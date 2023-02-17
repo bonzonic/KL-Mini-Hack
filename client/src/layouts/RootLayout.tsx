@@ -1,34 +1,63 @@
-import { Outlet, NavLink } from 'react-router-dom'
-import profileLogo from '../assets/person-fill.svg'
-import './Navbar.css'
-import Sweetalert2 from 'sweetalert2';
+import { Outlet, NavLink } from "react-router-dom";
+import profileLogo from "../assets/person-fill.svg";
+import "./Navbar.css";
+import Sweetalert2 from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/authenticationSlice";
+import { useState } from "react";
 import logo from "../assets/cabbage.svg";
 
 const RootLayout = () => {
-    const loggedIn = useSelector((state: boolean) => (state.authentication! as AuthenticationState).loggedIn);
-    const dispatch = useDispatch();
-    
+  const loggedIn = useSelector(
+    (state: boolean) => (state.authentication! as AuthenticationState).loggedIn
+  );
+  const dispatch = useDispatch();
+  const [coins, setCoins] = useState(0);
+  // fetch coin data from server
+  const email = localStorage.getItem("email") || "";
+  if (email !== undefined && email !== "") {
+    fetch(`http://localhost:8080/user/wallet?email=${email}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        let resJson = response.json();
+        return resJson;
+      })
+      .then((json) => {
+        const wallet = Object(json)["address"];
+        if (wallet !== undefined && wallet !== "") {
+          fetch(`http://localhost:8080/user/get-coin?walletAddress=${wallet}`, {
+            method: "GET",
+          })
+            .then((resp) => {
+              let resJson = resp.json();
+              return resJson;
+            })
+            .then((json) => {
+              setCoins(Object(json)["coins"]);
+              console.log(coins);
+            });
+        }
+      });
+  }
     const handleLog = () => {
         if (loggedIn) {
             Sweetalert2.fire({
-                icon: 'info',
-                iconColor: 'teal',
-                title: 'Logout?',
-                text: 'You are already logged in',
+                icon: "info",
+                iconColor: "teal",
+                title: "Logout?",
+                text: "You are already logged in",
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'logout'
-              }).then((result) => {
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "logout",
+            }).then((result) => {
                 if (result.isConfirmed) {
-                    dispatch(logout())
-                  }
-              })
-            }
+                    dispatch(logout());
+                }
+            });
+        }
     }
-    
     return (
         <div>
             <header className=' nav-container text-black'>
@@ -49,7 +78,7 @@ const RootLayout = () => {
                 </nav>
             </header>
 
-            <Outlet />
+            <Outlet context={[coins, setCoins]} />
         </div>
     )
 }
