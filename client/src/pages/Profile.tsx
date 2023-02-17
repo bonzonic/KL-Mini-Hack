@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import ScrollReveal from 'scrollreveal';
 import profilePic from '../assets/person-fill.svg'
 import wallet from '../assets/wallet2.svg'
+import { AuthenticationState } from '../slice/authenticationSlice';
+import { RootState } from '../main';
 import history from '../assets/history.svg'
 import coin from '../assets/coin.svg'
 import priceTag from '../assets/tag.svg'
@@ -57,7 +59,7 @@ const Profile = (props: any) => {
           });
       }, []);
 
-      const loggedIn = useSelector((state: boolean) => (state.authentication! as AuthenticationState).loggedIn);
+      const loggedIn = useSelector((state: RootState) => (state.authentication! as AuthenticationState).loggedIn);
 
       if (!loggedIn) {
         Sweetalert2.fire({

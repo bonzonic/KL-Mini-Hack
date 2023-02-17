@@ -1,11 +1,10 @@
 import { Vote } from "../pages/Home"
 import { QuestionAndCandidates } from "../pages/Home"
 import Selection from "./Selection"
+import { Election } from "../pages/Home"
 
 interface BallotProps {
-    electionName: string,
-    instruction?: string,
-    questionsAndCandidates: Array<QuestionAndCandidates>,
+    election: Election,
     ballot: Vote,
     nextStep: () => void
     handleSelection: (id: number, selection: string) => void
@@ -14,10 +13,10 @@ interface BallotProps {
 const Ballot = (props: BallotProps) => {
     return (
         <div className="mx-3 my-6">
-            <h1 className="text-3xl mb-2">{props.electionName}</h1>
-            <p><span className="font-bold text-primary">Instruction: </span>{props.instruction}</p>
+            <h1 className="text-3xl mb-2">{props.election.name}</h1>
+            <p><span className="font-bold text-primary">Instruction: </span>{props.election.instruction}</p>
             {
-                props.questionsAndCandidates ? props.questionsAndCandidates.map((questionAndCandidates: QuestionAndCandidates, key: number) => {
+                props.election.questionsAndCandidates ? props.election.questionsAndCandidates.map((questionAndCandidates: QuestionAndCandidates, key: number) => {
                     const checkedCandidate = props.ballot[questionAndCandidates.id]
                     return <Selection 
                                 id={questionAndCandidates.id} 
