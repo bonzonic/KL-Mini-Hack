@@ -142,7 +142,7 @@ const Home = () => {
     }
 
 
-    canUserVote(election.name)
+    //canUserVote(election.name)
     
 
 
