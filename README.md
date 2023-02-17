@@ -17,7 +17,10 @@ The anonymous voting system in this project uses blockchain to maintain the immu
 
 User privacy and manipulations are a big concern but it is not the only problems that are occuring during an election. In an election, there are also problems where some people have zero incentives to vote for a person, which creates problems including under-representation, issue addressing failures etc. Although some people truly do not have a opinion, there are also many that has an opinion but no incentive to vote. To incentivize more people to vote, some amount of money can be given to the people who voted through the form of cryptocurrency. 
 
+# Benefit Advantages
 But what is the Benefit of our platform? We reward voters by minting and distributing to their wallets a cabbage coin.
+
+Has an entire Login system for tracking past voting history, and cabbage coin wallet
 
 ## Installation (Front-End)
 1. From the main directory, run `cd client`
