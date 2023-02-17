@@ -216,7 +216,7 @@ app.post('/user/vote', (req, res) => {
     res.status(200).send("Vote succesful")
 })
 
-=======
+
 app.post("/zk/checkCandidate", async (req, res) => {
   const votingEventContract = new web3.eth.Contract(getAbi("VotingEvent.json"), getContractAddr());
   const candidateManagerContract = new web3.eth.Contract(getAbi("CandidateManager.json"), await votingEventContract.methods.getCandidateManager().call());
