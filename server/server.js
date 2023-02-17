@@ -8,7 +8,6 @@ const provider = new Web3.providers.HttpProvider("http://127.0.0.1:9545");
 
 app.use(cors({ origin: ["http://127.0.0.1:5173", "http://127.0.0.1:5174"] }));
 const { json } = require("express");
-const multer = require("multer");
 const { generateCommitment } = require("zk-merkle-tree");
 
 app.use(
