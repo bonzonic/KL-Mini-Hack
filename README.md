@@ -15,6 +15,8 @@ The anonymous voting system in this project uses blockchain to maintain the immu
 
 **Note:** The commitment and nullifier hash that are submitted into the blockchain does not have a link with each other but rather it is proven using a zero knowledge proof
 
+User privacy and manipulations are a big concern but it is not the only problems that are occuring during an election. In an election, there are also problems where some people have zero incentives to vote for a person, which creates problems including under-representation, issue addressing failures etc. Although some people truly do not have a opinion, there are also many that has an opinion but no incentive to vote. To incentivize more people to vote, some amount of money can be given to the people who voted through the form of cryptocurrency. 
+
 ## Installation (Front-End)
 1. From the main directory, run `cd client`
 2. To install the necessary dependencies, run `npm install`
