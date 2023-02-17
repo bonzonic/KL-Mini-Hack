@@ -34,7 +34,7 @@ const RootLayout = () => {
                 <nav className="flex justify-between">
                     <div className="flex flex-row items-center">
                         <NavLink className="text-white" to="/">
-                            <h1>ZKP Voting System</h1>
+                            <h1 className="ml-2">ZKP Voting System</h1>
                         </NavLink>
                     </div>
                     <div className="flex flex-row items-center text-white">

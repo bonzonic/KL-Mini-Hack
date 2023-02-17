@@ -48,7 +48,8 @@ const callPaidFunction = async (contractAddress, contractMethod) => {
 }
 
 // Stores as key(email): [value(password), []]
-const user_database = {};
+const user_database = {}
+const election_database = {}
 //const user_database = {"euanlim@gmail.com":["password", []]}
 
 // Parse JSON and x-www-form-urlencoded request bodies
