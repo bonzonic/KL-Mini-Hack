@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ScrollReveal from 'scrollreveal';
 import profilePic from '../assets/person-fill.svg'
 import wallet from '../assets/wallet2.svg'
+import history from '../assets/history.svg'
 import coin from '../assets/coin.svg'
 import priceTag from '../assets/tag.svg'
 import './Profile.css'
@@ -42,6 +43,17 @@ const Profile = (props: any) => {
             reset: true,
             viewFactor: 0.5,  
             delay: 350,
+          });
+
+          
+        sr.reveal('.history-profile', {
+            duration: 250,
+            distance: '40px',
+            easing: 'ease-out',
+            origin: 'left',
+            reset: true,
+            viewFactor: 0.2,  
+            delay: 500,
           });
       }, []);
 
@@ -125,10 +137,16 @@ const Profile = (props: any) => {
                 </div>
 
                 {/* Connect crypto wallet: https://www.coinbase.com/cloud/discover/dev-foundations/use-web3-react-to-connect-wallet */}
-                <div className="grid-item row-span-2 crypto-wallet-storage">
+                <div className="grid-item row-span-2 crypto-wallet-storage ">
                     <div className="flex flex-row">
                         <img src={wallet} className="w-10 h-10" alt="Crypto wallet" />
                         <h2 className="text-3xl ml-4">Crypto Wallets</h2>
+                    </div>
+                </div>
+                <div className='grid-item col-span-2 history-profile'>
+                <div className="flex flex-row">
+                        <img src={history} className="w-10 h-10 mr-auto" alt="History" />
+                        <h2 className="text-3xl ml-4 text-left">Voter History</h2>
                     </div>
                 </div>
             </div>
