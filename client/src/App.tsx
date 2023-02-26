@@ -16,7 +16,9 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />}/>
       <Route path="profile" element={<Profile />}/>
       <Route path="dashboard" element={<Dashboard />}/>
-    </Route>)
+    </Route>), {
+      basename: "/KL-Mini-Hack"
+    }
 )
 
 function App() {
