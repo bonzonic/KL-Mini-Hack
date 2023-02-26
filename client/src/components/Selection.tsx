@@ -11,7 +11,7 @@ interface SelectionProps {
 
 const Selection = (props: SelectionProps) => {
     // Usestate for candidates
-    const [candidates, setCandidate] = useState([]);
+    const [candidates, setCandidate] = useState<string[]>([]);
 
 
     const handleClick = (e:React.MouseEvent) => {
@@ -30,7 +30,7 @@ const Selection = (props: SelectionProps) => {
         }).then(data => {
           console.log(data)
           setCandidate(prevCandidates => {
-            const newCandidates = data.filter(newCandidate => {
+            const newCandidates = data.filter((newCandidate: string[]) => {
               return !prevCandidates.some(existingCandidate => newCandidate[0] === existingCandidate[0])
             })
             return [...prevCandidates, ...newCandidates]

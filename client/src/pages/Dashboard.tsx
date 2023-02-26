@@ -16,7 +16,7 @@ const Dashboard = () => {
     removeCandidate(removeCandidateInput)
   };
 
-  const addCandidate = async (candidate) => {
+  const addCandidate = async (candidate: string) => {
     const response = await fetch('http://localhost:8080/zk/addCandidate', {
       method: 'POST',
       headers: {
@@ -33,7 +33,7 @@ const Dashboard = () => {
     return result;
   };
 
-  const removeCandidate = async (name) => {
+  const removeCandidate = async (name: string) => {
     const response = await fetch('http://localhost:8080/zk/removeCandidate', {
       method: 'POST',
       headers: {

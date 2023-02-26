@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Sweetalert2 from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/authenticationSlice";
-import { RootState } from '../main';
 import { AuthenticationState } from '../slice/authenticationSlice';
 import Home from '../pages/Home';
 
@@ -19,7 +18,7 @@ export default function FormLogIn({ onCreateAccountClick }: Props): JSX.Element 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state: RootState) => (state.authentication as AuthenticationState).loggedIn);
+  const loggedIn = useSelector((state: any) => (state.authentication as AuthenticationState).loggedIn);
 
   console.log(loggedIn)
   

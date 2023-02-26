@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import Ballot from "../components/Ballot";
 import BallotConfirm from "../components/BallotConfirm";
 import BallotSent from "../components/BallotSent";
@@ -45,7 +45,7 @@ const Home = () => {
   const [ballot, setBallot] = useState<Vote>({});
   const [step, setStep] = useState<number>(1);
   const [userCanVote, setUserCanVote] = useState(true);
-  const [coins, setCoins] = useOutletContext();
+  const [coins, setCoins] = useOutletContext<[number, Dispatch<number>]>();
 
   const handleSelection = (id: number, selection: string) => {
     console.log("handleSelection() id:", id, ", selection:", selection);

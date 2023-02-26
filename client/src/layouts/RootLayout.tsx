@@ -3,13 +3,14 @@ import profileLogo from "../assets/person-fill.svg";
 import "./Navbar.css";
 import Sweetalert2 from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../slice/authenticationSlice";
+import { AuthenticationState, login, logout } from "../slice/authenticationSlice";
 import { useState } from "react";
 import logo from "../assets/cabbage.svg";
 
+
 const RootLayout = () => {
   const loggedIn = useSelector(
-    (state: boolean) => (state.authentication! as AuthenticationState).loggedIn
+    (state: any) => (state.authentication! as AuthenticationState).loggedIn
   );
   const dispatch = useDispatch();
   const [coins, setCoins] = useState(0);

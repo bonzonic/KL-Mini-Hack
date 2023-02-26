@@ -4,6 +4,7 @@ import Selection from "./Selection"
 import { Election } from "../pages/Home"
 import Sweetalert2 from 'sweetalert2';
 import { useSelector } from "react-redux";
+import { AuthenticationState } from "../slice/authenticationSlice";
 
 interface BallotProps {
     election: Election,
@@ -13,7 +14,7 @@ interface BallotProps {
 }
 
 const Ballot = (props: BallotProps) => {
-    const loggedIn = useSelector((state: RootState) => (state.authentication! as AuthenticationState).loggedIn);
+    const loggedIn = useSelector((state: any) => (state.authentication! as AuthenticationState).loggedIn);
 
     const handleClick = () => {
 

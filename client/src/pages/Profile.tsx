@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import Wallet from "../components/Wallet";
 import ScrollReveal from "scrollreveal";
 import profilePic from "../assets/person-fill.svg";
 import wallet from "../assets/wallet2.svg";
 import { AuthenticationState } from "../slice/authenticationSlice";
-import { RootState } from "../main";
 import history from "../assets/history.svg";
 import "./Profile.css";
 import { useSelector } from "react-redux";
@@ -13,11 +12,11 @@ import Swal from "sweetalert2";
 import { useOutletContext } from "react-router-dom";
 
 const Profile = (props: any) => {
-  const [coins, setCoins] = useOutletContext();
+  const [coins, setCoins] = useOutletContext<[number, Dispatch<number>]>();
   const [Username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [userAddress, setUserAddress] = useState<string>("");
-  const [userHistory, setUserHistory] = useState([]);
+  const [userHistory, setUserHistory] = useState<any[]>([]);
 
   useEffect(() => {
     const sr = ScrollReveal();
@@ -62,7 +61,7 @@ const Profile = (props: any) => {
   }, []);
 
   const loggedIn = useSelector(
-    (state: RootState) => (state.authentication as AuthenticationState).loggedIn
+    (state: any) => (state.authentication as AuthenticationState).loggedIn
   );
 
   if (!loggedIn) {
